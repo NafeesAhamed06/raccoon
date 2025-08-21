@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+.container h2 {
+  font-family: Poppins;
+  letter-spacing: 2px;
+  font-size: 26px;
+}
+.main-blog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main-blog * {
+  font-family: "POppins", sans-serif;
+}
+.main-blog h1 {
+  letter-spacing: 2px;
+}
+.main-blog p {
+  font-family: Raleway;
+  font-weight: 600;
+}
+.main-blog div {
+  width: 90%;
+  padding: 1%;
+}
+.exit {
+  margin: 12px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 4px;
+  font-family: Poppins;
+}

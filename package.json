@@ -1,0 +1,44 @@
+{
+  "name": "raccoon-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "Dstart": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": {
+    "name": "Nafees Ahamed",
+    "Fiverr": "https://www.fiverr.com/s/jj1oRLo"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://buymeacoffee.com/nafeesDeV"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.2",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.9",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "fs": "^0.0.1-security",
+    "moment": "^2.30.1",
+    "mongoose": "^7.0.3",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.2",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^2.0.22",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^4.6.1",
+    "stripe": "^17.6.0",
+    "uuid": "^11.1.0"
+  }
+}

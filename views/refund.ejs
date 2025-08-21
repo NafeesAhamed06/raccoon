@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raccoon App - Refund Policy</title>
+    <link rel="shortcut icon" href="/img/Logo3.webp" type="image/png" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <style>
+      /* General Page Styles */
+      /* Full-page gradient background */
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #0d001a, #1a0033 40%, #260044);
+        background-attachment: fixed; /* Prevent seams while scrolling */
+        background-size: cover;
+        color: #fff;
+        line-height: 1.7;
+      }
+
+      /* Main container with transparent/glass effect */
+      .main-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background: rgba(
+          20,
+          0,
+          40,
+          0.8
+        ); /* Slight transparency to let gradient show */
+        backdrop-filter: blur(6px);
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.2);
+      }
+
+      /* Page title */
+      .blogss {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #ff00ff;
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #9900ff;
+        text-align: center;
+        margin-bottom: 30px;
+        margin-top: 30px;
+      }
+
+      /* Headings with neon glow */
+      h2 {
+        font-size: 1.4rem;
+        margin-top: 40px;
+        margin-bottom: 12px;
+        color: #00e5ff;
+        text-shadow: 0 0 8px #00e5ff, 0 0 16px #00e5ff;
+        border-left: 4px solid #ff00ff;
+        padding-left: 10px;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        color: #ddd;
+      }
+
+      /* Lists */
+      ul {
+        padding-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      ul li {
+        margin-bottom: 8px;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 15px;
+        font-size: 0.9rem;
+        background: rgba(0, 0, 0, 0.5);
+        border-top: 1px solid rgba(255, 0, 255, 0.3);
+        color: #fff;
+        margin-top: 40px;
+      }
+
+      /* Links */
+      a {
+        color: #ff00ff;
+        text-shadow: 0 0 5px #ff00ff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+      }
+
+      .ext {
+        position: fixed;
+        top: 1%;
+        left: 3%;
+        cursor: pointer;
+        background: linear-gradient(135deg, #d27bff, #b84bff);
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.25s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .ext img {
+        width: 60%;
+        height: auto;
+        transition: transform 0.25s ease-in-out;
+      }
+
+      /* Hover effects */
+      .ext:hover {
+        transform: scale(1.1);
+        background: linear-gradient(135deg, #b84bff, #8f3aff);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      }
+
+      .ext:hover img {
+        transform: rotate(10deg);
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .main-container {
+          padding: 20px;
+        }
+        h2 {
+          font-size: 1.2rem;
+        }
+        .blogss {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+    <main>
+      <div class="main-container">
+        <div class="action-container">
+          <div onclick="window.location.href = '/'" class="blogss ext">
+            <img src="/img/Home.png" width="32px" style="filter: invert(1)" />
+          </div>
+          <p class="blogss">REFUND POLICY</p>
+          <div class="button-container" style="margin-top: 10%">
+            <p>
+              At <strong>Raccoon App</strong>, we strive to provide the best
+              experience for our users. If you are not satisfied with our
+              subscription service, you may be eligible for a partial refund as
+              outlined below.
+            </p>
+
+            <h2>Subscription Cancellation & Refunds</h2>
+            <ul>
+              <li>
+                You may cancel your subscription at any time from your account
+                settings.
+              </li>
+              <li>
+                If you cancel your subscription within "7 days of purchase", you
+                will automatically receive a 50% refund.
+              </li>
+              <li>
+                Refunds will be credited back to the original payment method.
+              </li>
+              <li>After "7 days", no refunds will be issued</li>
+            </ul>
+
+            <h2>Non Refundable Situations</h2>
+            <ul>
+              <li>
+                Refunds will not be issued for promotional or discounted
+                subscriptions.
+              </li>
+              <li>
+                Users who have violated our
+                <a href="/terms-service">Terms of Use</a> will not be eligible
+                for a refund.
+              </li>
+              <li>
+                We do not provide refunds for technical issues that are beyond
+                our control such as poor internet connection or third party
+                software interference.
+              </li>
+            </ul>
+
+            <h2>Refund Processing Time</h2>
+            <p>
+              Refunds are typically processed within 1-5 business days of your
+              subscription cancellation.
+            </p>
+
+            <h2>Changes to This Policy</h2>
+            <p>
+              We reserve the right to update our refund policy at any time. Any
+              changes will be reflected on this page. This policy was last
+              modified on 24/06/25.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="/js/main.js"></script> -->
+  </body>
+</html>

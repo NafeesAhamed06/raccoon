@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/img/Logo3.webp" type="image/x-icon" />
+
+    <title>Raccoon App – Auth</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *{
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Orbitron", sans-serif;
+        background: radial-gradient(circle at top left, #1a0052, #000 80%);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      * {
+        font-family: "Montserrat";
+      }
+      .auth-container {
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 15px;
+        padding: 30px 40px;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        cursor: pointer;
+        padding: 10px 20px;
+        margin: 0 5px;
+        border: 1px solid #00f0ff;
+        border-radius: 8px;
+        background: transparent;
+        color: #00f0ff;
+        transition: 0.3s ease;
+      }
+
+      .tab.active {
+        background: #00f0ff;
+        color: #000;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      }
+
+      form {
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      form.active {
+        display: flex;
+      }
+
+      input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        padding: 12px;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: #00f0ff;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+      }
+
+      button[type="submit"] {
+        background: linear-gradient(135deg, #ff00cc, #3333ff);
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 0 10px rgba(255, 0, 204, 0.4);
+      }
+
+      button[type="submit"]:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(255, 0, 204, 0.6);
+      }
+
+      .googlebtn {
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid #00f0ff;
+        border-radius: 8px;
+        padding: 12px;
+        color: #00f0ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        margin-top: 15px;
+      }
+
+      .googlebtn:hover {
+        box-shadow: 0 0 18px rgba(0, 240, 255, 0.4);
+      }
+
+      .googlebtn img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .link {
+        text-align: center;
+        color: #aaa;
+        font-size: 13px;
+        text-decoration: none;
+        margin-top: 10px;
+        display: block;
+      }
+
+      .link:hover {
+        color: #ff00cc;
+        text-shadow: 0 0 5px #ff00cc;
+      }
+      @media (max-width: 420px) {
+        .googlebtn {
+          font-size: 14px;
+        }
+        .auth-container {
+          background: rgba(0, 0, 0, 0.6);
+          border-radius: 15px;
+          padding: 30px 48px;
+          box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+          width: 55%;
+          max-width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="tabs">
+        <div class="tab active" onclick="toggleTab('register')">Register</div>
+        <div class="tab" onclick="toggleTab('login')">Login</div>
+      </div>
+
+      <!-- Register Form -->
+      <form id="register" action="/auth/register" method="POST" class="active">
+        <input name="name" placeholder="Name" required />
+        <input name="email" type="email" placeholder="Email" required />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
+
+      <!-- Login Form -->
+      <form id="login" action="/auth/login" method="POST">
+        <input name="email" type="email" placeholder="Email" required />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+
+      <a href="/auth/google" class="googlebtn">
+        <img
+          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          alt="Google Logo"
+        />
+        <span>Sign in with Google</span>
+      </a>
+    </div>
+
+    <script>
+      function toggleTab(tabName) {
+        document
+          .querySelectorAll(".tab")
+          .forEach((tab) => tab.classList.remove("active"));
+        document
+          .querySelectorAll("form")
+          .forEach((form) => form.classList.remove("active"));
+
+        document
+          .querySelector(`.tab[onclick*="${tabName}"]`)
+          .classList.add("active");
+        document.getElementById(tabName).classList.add("active");
+      }
+    </script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get("type");
+      if (myParam === "register") {
+        toggleTab("register");
+      } else if (myParam === "login") {
+        toggleTab("login");
+      }
+    </script>
+
+  </body>
+</html>

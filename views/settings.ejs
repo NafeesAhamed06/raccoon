@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/img/Logo3.webp" type="image/x-icon" />
+
+    <title>Raccoon App - Settings</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/modal.css?v=0.01.1" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      
+      * {
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #0d1117;
+        font-family: "Montserrat", sans-serif;
+        color: #e6edf3;
+        margin: 0;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .settings-container {
+        background: rgba(30, 30, 40, 0.5);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 2.5rem;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 2rem;
+        display: block;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.7);
+      }
+
+      .field {
+        margin-bottom: 2rem;
+      }
+
+      .field-label {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #8b949e;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .field-content {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        transition: border-color 0.3s ease;
+      }
+
+      .field-content.is-editing {
+        border-bottom-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .field-value {
+        background: none;
+        border: none;
+        color: #e6edf3;
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 500;
+        outline: none;
+        padding: 0.6rem 0;
+      }
+
+      .field-value:disabled {
+        color: #a0a0a0;
+        cursor: default;
+      }
+
+      .non-editable-value {
+        padding: 0.6rem 0;
+        font-weight: 500;
+        color: #a0a0a0;
+      }
+
+      .material-icons.edit-icon {
+        cursor: pointer;
+        margin-left: 0.8rem;
+        color: #8b949e;
+        transition: color 0.3s ease, transform 0.2s ease;
+      }
+
+      .material-icons.edit-icon:hover {
+        color: #fff;
+        transform: scale(1.1);
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2.5rem;
+        gap: 1rem;
+      }
+
+      .btn {
+        flex-grow: 1;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-primary {
+        background: #f0f6fc;
+        color: #0d1117;
+      }
+
+      .btn-primary:hover {
+        background: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(240, 246, 252, 0.1);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #8b949e;
+        border: 1px solid #30363d;
+      }
+
+      .btn-secondary:hover {
+        background-color: rgba(139, 148, 158, 0.1);
+        border-color: #8b949e;
+        color: #c9d1d9;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="settings-container">
+      <img
+        data-modal-target="#filter-model"
+        src="<%= pfp %>"
+        alt="Profile Picture"
+        class="profile-pic"
+        style="cursor: pointer;"
+        />
+      <div class="field">
+        <div class="field-label">Username</div>
+        <div class="field-content">
+          <input
+            type="text"
+            id="username"
+            class="field-value"
+            value="<%= name %>"
+            disabled
+          />
+          <% if(!isGuest) {%>
+          <i class="material-icons edit-icon" onclick="enableEdit('username')"
+            >edit</i
+          >
+          <% } %>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Email</div>
+        <div class="field-content">
+          <div class="non-editable-value" id="email"><%= email %></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Country</div>
+        <div class="field-content">
+          <div class="non-editable-value" id="email"><%= country %></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Gender</div>
+        <div class="field-content">
+          <div class="non-editable-value" id="email"><%= gender %></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Login Method</div>
+        <div class="field-content">
+          <% if(!isGuest) {%>
+          <div class="non-editable-value"><%= Login %></div>
+          <% }else{ %>
+          <div class="non-editable-value">Guest Login</div>
+          <% } %>
+        </div>
+      </div>
+
+      <% if(!isGuest) {%>
+      <div class="field">
+        <div class="field-label">Subscription</div>
+        <% if(sub === "pro") { %>
+        <div class="field-content">
+          <div class="non-editable-value">
+            Pro Member — Valid Until <%= proDuration ? proDuration : 'Nil' %>
+          </div>
+        </div>
+        <% } else { %>
+        <div class="field-content-free">
+          <div class="non-editable-value">Free Member</div>
+          <a href="/plans" class="pro-btn">Go Pro</a>
+        </div>
+        <% } %>
+      </div>
+      <% } %>
+      <style>
+        /* Add this to your existing CSS file */
+
+        .field-content-free {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          padding: 0.2rem 0;
+        }
+
+        .pro-btn {
+          background-color: #f0f6fc;
+          color: #0d1117;
+          padding: 0.4rem 0.9rem;
+          border-radius: 8px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
+        .pro-btn:hover {
+          background-color: #fff;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(240, 246, 252, 0.1);
+        }
+      </style>
+      <div class="btn-container">
+        <button class="btn btn-secondary" onclick="window.history.back()">
+          Exit
+        </button>
+        <button
+          class="btn btn-primary hidden"
+          id="saveBtn"
+          onclick="saveChanges()"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let originalUsername = document.getElementById("username").value;
+      const saveBtn = document.getElementById("saveBtn");
+      const usernameInput = document.getElementById("username");
+
+      function enableEdit(id) {
+        const input = document.getElementById(id);
+        const fieldContent = input.parentElement;
+
+        originalUsername = input.value; // Store the current value before editing
+        input.disabled = false;
+        input.focus();
+        // Select all text in the input
+        input.select();
+        fieldContent.classList.add("is-editing");
+      }
+
+      usernameInput.addEventListener("input", () => {
+        if (
+          usernameInput.value !== originalUsername &&
+          usernameInput.value.trim() !== ""
+        ) {
+          saveBtn.classList.remove("hidden");
+        } else {
+          saveBtn.classList.add("hidden");
+        }
+      });
+
+      usernameInput.addEventListener("blur", () => {
+        // A small delay to allow the save button click to register
+        setTimeout(() => {
+          if (document.activeElement !== saveBtn) {
+            disableEdit("username");
+          }
+        }, 100);
+      });
+
+      function disableEdit(id) {
+        const input = document.getElementById(id);
+        const fieldContent = input.parentElement;
+
+        input.disabled = true;
+        fieldContent.classList.remove("is-editing");
+        saveBtn.classList.add("hidden");
+        // Revert to original if no changes were saved
+        input.value = originalUsername;
+      }
+
+      function saveChanges() {
+        const newUsername = usernameInput.value;
+        // Basic validation
+        if (newUsername.trim() === "") {
+          alert("Username cannot be empty.");
+          usernameInput.focus();
+          return;
+        }
+        originalUsername = newUsername; // Update the original value
+        const postData = {
+          username: newUsername,
+        };
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        };
+        fetch("/Update-Username", requestOptions)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            console.log(response);
+            alert("Changes saved! New Username: " + newUsername);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+        disableEdit("username");
+      }
+    </script>
+    <div class="modal" id="filter-model">
+      <div class="modal-header">
+        <div class="title">Change Profile</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="modal-body filt-model">
+        <form
+          action="/upload-avatar"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="file" name="avatar" accept="image/*" required />
+          <button type="submit">Upload</button>
+        </form>
+        <style>
+          #reportReason {
+            padding: 8px;
+            font-size: 14px;
+            margin-right: 10px;
+            outline: none;
+            border-radius: 10px;
+            border: 2px solid;
+          }
+
+          #submitReportBtn {
+            padding: 8px 12px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: #8a5ce7;
+          }
+          .modal {
+            background: radial-gradient(
+              circle at 20% 20%,
+              #1a0052,
+              #000000 70%
+            );
+            background-color: #0d0d1f;
+            border: 1px solid white;
+            color: white;
+          }
+          .modal-header {
+            border-bottom: 1px solid white;
+          }
+          .modal-body {
+            display: flex;
+            justify-content: center;
+          }
+          .close-button {
+            color: white;
+          }
+          #country {
+            padding: 6px;
+          }
+          #gender {
+            padding: 6px;
+          }
+          .filt-model {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+          }
+          * {
+            font-family: "Montserrat";
+          }
+          #submitFilter {
+            padding: 5px;
+            width: 30%;
+          }
+        </style>
+      </div>
+    </div>
+    <div id="overlay"></div>
+  </body>
+  <script src="/js/modal.js"></script>
+</html>

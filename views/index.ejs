@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/img/Logo3.webp" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Raccoon App - Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/modal.css?v=0.01.1" />
+  </head>
+  <body>
+    <script>
+      const brra = "<%=usera.proDuration%>";
+      const myMail = "<%=user.email%>";
+    </script>
+    <!-- Loader -->
+    <div id="page-loader">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="title">SUBSCRIPTION</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <% if(usera.sub == "free"){%>
+        <p class="modalpro">
+          <strong>Current Plan: </strong>FREE<img
+            src="/img/SUBS/Free.png"
+            style="filter: invert(1)"
+            class="proimg"
+          />
+        </p>
+        <p class="modalpro">
+          <strong>Connects Left: </strong>
+          <%=usera.freeLimit%>
+        </p>
+        Subscribe to Pro to unlock unlimited texting, video calling, and
+        exclusive features!
+        <div class="subscription-box">
+          <h2>Choose a Subscription Plan</h2>
+          <div class="subOptionHolder">
+            <select id="subscriptionPlan" class="sub-sel">
+              <option value="0.3">1 Week - $5</option>
+              <option value="1">1 Month - $13</option>
+              <option value="6">6 Months - $30</option>
+            </select>
+            <br />
+            <button onclick="subscribe()" class="sub-but">Subscribe</button>
+            <br />
+          </div>
+          <div class="subOptionHolder">
+            <a href="/refund-policy" class="refundPOL">Refund Policy</a>
+          </div>
+        </div>
+        <%}else if(usera.sub == "pro"){%>
+        <p class="modalpro">
+          <strong>Current Plan: </strong>PRO<img
+            src="/img/SUBS/Pro.png"
+            class="freeimg"
+          />
+        </p>
+        <p class="modalpro">
+          <strong>Ends ON: </strong>
+          <script>
+            console.log(brra);
+            let formattedDate = new Date(brra).toISOString().split("T")[0];
+            document.write(formattedDate);
+          </script>
+        </p>
+        <p style="color: red; font-weight: 900; text-align: center">
+          NOTE* THERE IS NO REFUNDS
+        </p>
+        <button class="can-but" id="cancel-subscription">CANCEL</button>
+        <script>
+          //Cancel Subscription
+          document
+            .getElementById("cancel-subscription")
+            .addEventListener("click", async () => {
+              const response = await fetch("/cancel-subscription", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userEmail: myMail }),
+              });
+
+              const data = await response.json();
+              alert(data.message);
+              location.reload();
+            });
+        </script>
+        <%}%>
+      </div>
+    </div>
+    <div id="overlay"></div>
+    <div id="loadingDialog">
+      <div class="loading-content">
+        <p>Processing your subscription...</p>
+      </div>
+    </div>
+
+    <div class="profile brrdrr">
+      <button class="abutton setting-BTN">
+        <img src="/img/settings2.png" alt="Settings" />
+      </button>
+
+      <div class="profile-wrapper">
+        <img src="<%= usera.pfp %>" class="profile-pic pfpp" alt="" />
+        <div class="navdown">
+          <img src="<%= usera.pfp %>" class="profile-pic" alt="" />
+          <p class="mu-name"><%= usera.name %></p>
+          <p class="mu-email"><%= usera.email %></p>
+          <% if(!usera.isGuest) { %> <% if(usera.sub == "pro") { %>
+          <p data-modal-target="#modal" id="subspro" class="pro">
+            Pro User <img src="/img/SUBS/Pro.png" class="proimg" />
+          </p>
+          <% } else {%>
+          <p data-modal-target="#modal" class="free">
+            Free User
+            <img
+              style="filter: invert(1)"
+              src="/img/SUBS/Free.png"
+              class="freeimg"
+            />
+          </p>
+          <% } %> <% } %>
+          <a
+            style="color: white; text-decoration: none; font-weight: 900"
+            id="logout-button"
+            href="/auth/logout"
+            >Logout</a
+          >
+        </div>
+      </div>
+    </div>
+    <main>
+      <div class="main-container">
+        <div class="index-action-container">
+          <div class="index-action-cont">
+            <p class="start-chat test-effect-1 test-1">RACCOON APP</p>
+            <!-- <p class="start-chat glow-effect-2 test-1">RACCOON APP</p> -->
+            <p class="start-chat test-2">Random Voice Chat</p>
+          </div>
+          <div class="button-container">
+            <button class="abutton test-3" id="callBtn" style="cursor: pointer">
+              <a>START</a>
+              <!-- <a
+                style="
+                  color: wheat;
+                  text-decoration: none;
+                  font-family: 'Montserrat' !important;
+                  font-weight: 200;
+                "
+                >Video Chat</a
+              > -->
+            </button>
+            <p class="terms">
+              Check our
+              <a href="/terms-service" target="_blank">Terms of Service</a>
+              and
+              <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+            </p>
+          </div>
+          <style>
+            .button-container {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              align-items: center;
+              justify-content: center;
+            }
+          </style>
+
+          <div class="modal" id="Warning">
+            <div class="modal-header">
+              <div class="title">Keep Raccoon Clean & Respectful</div>
+              <button data-close-button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p
+                style="
+                  text-align: center;
+                  font-weight: 900;
+                  color: red;
+                  font-size: large;
+                "
+              >
+                Please confirm that you are 18 years or older.
+              </p>
+              <p
+                style="
+                  text-align: center;
+                  font-weight: 900;
+                  color: red;
+                  font-size: large;
+                "
+              >
+                You may be recorded at any time in the app
+              </p>
+              <p>This is a safe space. Please:</p>
+              <ul>
+                <li>Don’t flirt.</li>
+                <li>Don’t say inappropriate things.</li>
+                <li>Don’t remove clothing.</li>
+                Don’t ask for personal info.
+              </ul>
+              <p>
+                Let’s keep Raccoon clean, respectful, and peaceful for everyone.
+                If you want to vent, talk, or make friends – do it kindly.
+              </p>
+              <p>
+                By using Raccoon, you agree to follow these community rules and
+                <a style="color: #00f0ff" href="/terms-service" target="_blank"
+                  >Terms of Service</a
+                >
+              </p>
+              <button id="confirmWarning" class="can-but" data-close-button>
+                I Accept
+              </button>
+            </div>
+          </div>
+          <style>
+            #Warning {
+              height: 80vh;
+              overflow: auto;
+            }
+            .index-action-cont p {
+              margin: 0;
+            }
+            .test-effect-1 {
+              text-shadow: 0 0 6px #1ae6f4, 0 0 12px #1ae6f4, 0 0 20px #1ae6f4,
+                0 0 30px #1ae6f4;
+            }
+            .test-1 {
+              font-size: 10vh;
+            }
+            .test-2 {
+              font-size: 5vh;
+              color: #5d039d;
+            }
+            .test-3 {
+              cursor: pointer;
+              background: linear-gradient(135deg, #ff00cc54, #3333ff26);
+              box-shadow: 0 0px 20px 10px rgba(255, 0, 204, 0.6);
+              outline: 3px solid #ff00cc;
+            }
+            .test-3:hover {
+              /* box-shadow: 0 0 25px 20px rgb(100 0 255 / 90%); */
+              box-shadow: 0 0 25px 20px #1784a2;
+              outline: 3px solid #00c8ff;
+            }
+            .test-3 a {
+              color: #ffffff;
+              text-decoration: none;
+              font-family: "Montserrat" !important;
+              font-weight: 900;
+              text-shadow: 0 0 19px #ff00ccad, 0 0 20px #ff00ccba,
+                0 0 20px #cc00ff, 0 0 30px #cc00ffc2;
+              font-size: larger;
+              text-transform: uppercase;
+              letter-spacing: 5px;
+              font-family: "Montserrat" !important;
+            }
+            button.test-3:hover a {
+              color: #ff00ff; /* any color you want */
+            }
+
+            @media (max-width: 768px) {
+              .test-1 {
+                font-size: 6vh;
+              }
+              .test-2 {
+                font-size: 3vh;
+              }
+            }
+          </style>
+        </div>
+        <img src="/img/Racoon-transparent1.webp" alt="" class="glow-raccoon" />
+      </div>
+    </main>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/main.js"></script>
+    <script defer src="/js/modal.js"></script>
+    <script>
+      function logout() {
+        // Clear cookies
+        document.cookie.split(";").forEach((c) => {
+          document.cookie = c
+            .replace(/^ +/, "")
+            .replace(
+              /=.*/,
+              "=;expires=" + new Date().toUTCString() + ";path=/"
+            );
+        });
+        // Clear localStorage
+        localStorage.clear();
+        // Logout from session
+        console.log("Logged out!");
+      }
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", logout);
+    </script>
+    <!-- <script defer>
+      const match = location.search.match(/[\?&]plans=([^&]*)/);
+      const brr = match ? decodeURIComponent(match[1]) : null;
+      if (brr == "true") {
+        console.log(openModalButtons);
+        openModalButtons[0].click();
+        const url = new URL(window.location.href);
+        url.searchParams.delete("plans");
+        window.history.replaceState(
+          {},
+          document.title,
+          url.pathname + url.search
+        );
+      }
+    </script> -->
+    <script>
+      //Page Loader
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("page-loader");
+        if (loader) {
+          loader.style.display = "none";
+        }
+      });
+      //Settings Redirect
+      document.querySelector(".setting-BTN").addEventListener("click", () => {
+        window.location.href = "/Settings";
+      });
+
+      //Subscribe
+      function subscribe() {
+        let plan = document.getElementById("subscriptionPlan").value;
+        let loadingDialog = document.getElementById("loadingDialog");
+
+        // Show loading dialog
+        loadingDialog.style.display = "flex";
+
+        fetch("/create-invoice-subscription", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ plan: plan }),
+        })
+          .then((response) => response.text())
+          .then((text) => {
+            const data = JSON.parse(text);
+            if (data.url) {
+              window.location.href = data.url; // Redirect to PayPal approval page
+            } else {
+              alert("Subscription failed. No URL returned.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Subscription failed, please try again.");
+          })
+          .finally(() => {
+            loadingDialog.style.display = "none";
+          });
+      }
+
+      //Video Chat Button
+      document
+        .getElementById("callBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // stop default link navigation
+
+          const today = new Date().toDateString();
+          const lastShown = localStorage.getItem("popupShownDate");
+
+          if (lastShown !== today) {
+            const modalW = document.querySelector("#Warning");
+            if (modalW) {
+              modalW.classList.add("active");
+              document.getElementById("overlay").classList.add("active");
+            }
+
+            // When user confirms in the modal:
+            document
+              .querySelector("#confirmWarning")
+              .addEventListener("click", () => {
+                localStorage.setItem("popupShownDate", today);
+                window.location.href = "/video_chat"; // now go to video chat
+              });
+          } else {
+            // Already shown today, skip modal
+            window.location.href = "/video_chat";
+          }
+        });
+    </script>
+  </body>
+</html>
+<style>
+  /* Loader wrapper full-screen */
+  #page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white; /* Or dark background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999999999999999;
+  }
+
+  /* Spinner style */
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #ff69b4; /* Pink color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Spinner animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: radial-gradient(circle at 20% 20%, #1a0052, #000000 70%);
+    background-color: #0d0d1f;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Inter", sans-serif;
+    overflow: hidden;
+    color: #fff;
+  }
+  .glow-effect {
+    text-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff, 0 0 24px #00f0ff;
+  }
+  .glow-image {
+    width: 300px; /* or whatever size fits your layout */
+    filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px #00ffff)
+      drop-shadow(0 0 30px #00ffff);
+  }
+
+  .refundPOL {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  #loadingDialog {
+    display: none;
+  }
+  .subOptionHolder {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .mu-name {
+    font-size: 13px;
+  }
+  .free {
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .pro {
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .proimg {
+    width: 20px;
+  }
+  .profile {
+    z-index: 100;
+    gap: 10px;
+    display: flex;
+    width: fit-content;
+    position: absolute;
+    right: 3%;
+    top: 3%;
+  }
+  .profile-pic {
+    cursor: pointer;
+    width: 50px;
+    object-fit: cover;
+    height: 50px;
+    border-radius: 30px;
+  }
+  .pfpp {
+    border: 2px solid white;
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4))
+      drop-shadow(0 0 40px rgba(0, 240, 255, 0.3))
+      drop-shadow(0 0 60px rgba(179, 0, 255, 0.3));
+  }
+  /* .profile:hover .navdown {
+    display: flex;
+  } */
+  .profile-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .profile-wrapper:hover .navdown {
+    display: flex;
+  }
+  .mu-email {
+    font-size: 13px;
+  }
+
+  .navdown {
+    display: none;
+    z-index: 3;
+    flex-direction: column;
+    width: 20%;
+    right: 1%;
+    overflow: hidden;
+    padding: 10px;
+    position: fixed;
+    top: 1%;
+    font-family: Poppins;
+    background: rgba(20, 20, 35, 0.85); /* deep dark with slight transparency */
+    border-radius: 12px;
+    backdrop-filter: blur(6px); /* glass effect */
+    color: #fff; /* text contrast */
+  }
+  /* .brrdrr:hover .navdown {
+    display: flex;
+  } */
+  .glow-effect-2 {
+    text-shadow: 0 0 6px #ff00cc, 0 0 12px #ff00cc, 0 0 20px #cc00ff,
+      0 0 30px #cc00ff;
+  }
+  /* Show Mobile Menu Only on Small Screens */
+  @media (max-width: 768px) {
+    .profile {
+      display: flex;
+      top: 1%;
+      right: 1%;
+      /* padding: 0px 25px; */
+      align-items: center;
+      justify-content: space-evenly;
+      color: white;
+    }
+    .navdown {
+      width: 65%;
+    }
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      height: 100vh;
+      justify-content: space-around;
+    }
+  }
+</style>

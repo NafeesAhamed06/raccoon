@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Denied</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      background: #121212;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #ff4d4d;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 500px;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .container {
+      background: #1e1e1e;
+      padding: 2rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      .container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Raccoon Access Restricted</h1>
+    <p><%= message %></p>
+  </div>
+</body>
+</html>

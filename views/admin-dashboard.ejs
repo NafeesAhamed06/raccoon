@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Panel Raccoon Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(to right, #0f0f0f, #1a1a1a);
+        margin: 0;
+        padding: 40px;
+        color: #fff;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #121212;
+        padding: 40px;
+        border-radius: 16px;
+        border: 1px solid #2a2a2a;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      .header-flex {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      h1 {
+        font-weight: 600;
+        font-size: 28px;
+        margin: 0;
+      }
+
+      form {
+        display: inline;
+      }
+
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin: 30px 0;
+        flex-wrap: wrap;
+        gap: 10px;
+        border-bottom: 1px solid #333;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 8px 8px 0 0;
+        font-weight: 600;
+        background-color: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        border-bottom: none;
+        transition: background 0.3s ease;
+      }
+
+      .tab.active {
+        background: #242424;
+        color: #fff;
+      }
+
+      section {
+        display: none;
+      }
+
+      section.active {
+        display: block;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      li {
+        display: flex;
+        gap: 10px;
+        background: #1c1c1c;
+        padding: 16px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        border: 1px solid #2e2e2e;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      button {
+        background: linear-gradient(to right, #6a5acd, #7b68ee);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: linear-gradient(to right, #7b68ee, #8a75f0);
+      }
+
+      .user-info div {
+        margin: 4px 0;
+        word-break: break-word;
+      }
+
+      #no-reports,
+      #no-banned {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 16px;
+        color: #ccc;
+      }
+      .actions-hld {
+        display: flex;
+        gap: 10px;
+      }
+      .actions-hld-2 {
+        display: flex;
+        /* gap: 10px; */
+        flex-direction: column;
+        align-items: center;
+      }
+      .dlt {
+        background: linear-gradient(to right, #cd5a5a, #ee6868);
+      }
+      .dlt:hover {
+        background: linear-gradient(to right, #ee6868, #f0757f);
+      }
+      @media (max-width: 768px) {
+        body {
+          padding: 20px;
+        }
+
+        .container {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 22px;
+          text-align: center;
+        }
+
+        .header-flex {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .tabs {
+          flex-direction: column;
+        }
+
+        .tab {
+          width: 100%;
+          text-align: center;
+        }
+
+        li {
+          padding: 12px;
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header-flex">
+        <h1>Raccoon Admin</h1>
+        <form method="GET" action="/admin/logout">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-target="reports">Reported Users</div>
+        <div class="tab" data-target="banned">Banned Users</div>
+      </div>
+
+      <section id="reports" class="active">
+        <ul id="reported-users"></ul>
+        <div id="no-reports">No Reports Yet.</div>
+      </section>
+
+      <section id="banned">
+        <ul id="banned-users"></ul>
+        <div id="no-banned">No banned Users.</div>
+      </section>
+    </div>
+
+    <script>
+      const tabs = document.querySelectorAll(".tab");
+      const sections = document.querySelectorAll("section");
+      const bannedUsersList = document.getElementById("banned-users");
+      const noBans = document.getElementById("no-banned");
+      const reportedUsersList = document.getElementById("reported-users");
+      const noReports = document.getElementById("no-reports");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active"));
+          sections.forEach((s) => s.classList.remove("active"));
+
+          tab.classList.add("active");
+          document.getElementById(tab.dataset.target).classList.add("active");
+        });
+      });
+
+      fetch("/admin/banned-users")
+        .then((res) => res.json())
+        .then((Bans) => {
+          if (Bans.length === 0) {
+            noBans.style.display = "block";
+            return;
+          }
+          noBans.style.display = "none";
+          Bans.forEach((Ban) => {
+            console.log(Ban);
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <div class="user-info">
+                  <div><strong>User ID:</strong> ${Ban._id}</div>
+                  <div><strong>Email:</strong> ${Ban.email}</div>
+                  <div><strong>Reason:</strong> ${Ban.banReason}</div>
+                  <div><strong>Sub:</strong> ${Ban.sub}</div>
+                </div>
+                <div class="actions-hld-2">
+                  <form method="POST" action="/admin/delete-ban">
+                    <input type="hidden" name="userID" value="${Ban._id}">
+                        <button type="submit">Unban</button>
+                    </form>
+                </div>
+              `;
+            bannedUsersList.appendChild(li);
+          });
+        })
+        .catch((err) => {
+          console.error("Failed to load reports:", err);
+          noBans.innerText = "Failed to load reports.";
+          noBans.style.display = "block";
+        });
+
+      fetch("/admin-reports")
+        .then((res) => res.json())
+        .then((reports) => {
+          console.log("Reports:", reports);
+          if (reports.length === 0) {
+            noReports.style.display = "block";
+            return;
+          }
+          noReports.style.display = "none";
+          reports.forEach((report) => {
+            const li = document.createElement("li");
+            if (report.handled) {
+              li.innerHTML = `
+                <div class="user-info">
+                  <div><strong>Reporter ID:</strong> ${report.reporterId}</div>
+                  <div><strong>Reported ID:</strong> ${report.reportedId}</div>
+                  <div><strong>Reason:</strong> ${report.reason}</div>
+                  <div style="font-size:12px; color:#aaa;"><em>${new Date(
+                    report.timestamp
+                  ).toLocaleString()}</em></div>
+                </div>
+                <div class="actions-hld-2">
+                  <p>Report is Handled</p>
+                  <form method="POST" action="/admin/delete-report">
+                    <input type="hidden" name="reportID" value="${report._id}">
+                        <button class='dlt' type="submit">Delete</button>
+                    </form>
+                </div>
+              `;
+            } else {
+              li.innerHTML = `
+                <div class="user-info">
+                  <div><strong>Reporter ID:</strong> ${report.reporterId}</div>
+                  <div><strong>Reported ID:</strong> ${report.reportedId}</div>
+                  <div><strong>Reason:</strong> ${report.reason}</div>
+                  <div style="font-size:12px; color:#aaa;"><em>${new Date(
+                    report.timestamp
+                  ).toLocaleString()}</em></div>
+                </div>
+                <div class="actions-hld">
+                    <form method="POST" action="/admin/ban-user">
+                        
+                       <button type="button" class="open-ban-modal" data-userid="${report.reportedId}" data-reason="${report.reason}" data-reportid="${report._id}">Ban</button>
+                    </form>
+                    <form method="POST" action="/admin/delete-report">
+                        <input type="hidden" name="reportID" value="${
+                          report._id
+                        }">
+                        <button class='dlt' type="submit">Delete</button>
+                    </form>
+                </div>
+              `;
+            }
+                        // <button type="submit">Ban</button>
+
+            reportedUsersList.appendChild(li);
+          });
+        })
+        .catch((err) => {
+          console.error("Failed to load reports:", err);
+          noReports.innerText = "Failed to load reports.";
+          noReports.style.display = "block";
+        });
+    </script>
+    <!-- Ban Modal -->
+    <div
+      id="banModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: #1c1c1c;
+          padding: 20px;
+          border-radius: 10px;
+          width: 90%;
+          max-width: 400px;
+          border: 1px solid #333;
+        "
+      >
+        <h2 style="margin-top: 0">Ban User</h2>
+        <form id="banForm" method="POST" action="/admin/ban-user">
+          <input type="hidden" name="userID" id="ban-user-id" />
+          <input type="hidden" name="reportID" id="ban-report-id" />
+          <input type="hidden" name="Reason" id="ban-user-reason" />
+
+          <label for="ban-duration">Duration:</label>
+          <select
+            name="permenant"
+            id="ban-duration"
+            required
+            style="width: 100%; padding: 8px; margin-bottom: 20px"
+          >
+            <option value="Permanent">Permanent</option>
+            <option value="10HOUR">10 HOURS</option>
+            <option value="1DAY">1 DAY</option>
+            <option value="7DAY">7 DAYS</option>
+          </select>
+
+          <div style="display: flex; justify-content: space-between">
+            <button type="submit">Confirm Ban</button>
+            <button type="button" onclick="closeBanModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script>
+    function closeBanModal() {
+  document.getElementById("banModal").style.display = "none";
+}
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("open-ban-modal")) {
+    const userId = e.target.getAttribute("data-userid");
+    const reportId = e.target.getAttribute("data-reportid");
+    const reason = e.target.getAttribute("data-reason");
+    document.getElementById("ban-user-id").value = userId;
+    document.getElementById("ban-report-id").value = reportId;
+    document.getElementById("ban-user-reason").value = reason;
+    document.getElementById("ban-duration").value = "";
+    document.getElementById("banModal").style.display = "flex";
+  }
+
+  // Optional: Close modal if background is clicked
+  if (e.target.id === "banModal") {
+    closeBanModal();
+  }
+});
+
+  </script>
+</html>

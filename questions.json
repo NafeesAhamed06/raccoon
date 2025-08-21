@@ -1,0 +1,182 @@
+[
+  {
+    "question": "Name something people do first thing in the morning",
+    "answers": [
+      { "answer": "Brush teeth", "points": 30 },
+      { "answer": "Check phone", "points": 25 },
+      { "answer": "Eat breakfast", "points": 20 },
+      { "answer": "Shower", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a fruit you might eat for breakfast",
+    "answers": [
+      { "answer": "Banana", "points": 30 },
+      { "answer": "Apple", "points": 25 },
+      { "answer": "Orange", "points": 20 },
+      { "answer": "Berries", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something you might see at the beach",
+    "answers": [
+      { "answer": "Sand", "points": 30 },
+      { "answer": "Waves", "points": 25 },
+      { "answer": "Seashells", "points": 20 },
+      { "answer": "Swimmers", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a popular pet",
+    "answers": [
+      { "answer": "Dog", "points": 35 },
+      { "answer": "Cat", "points": 30 },
+      { "answer": "Fish", "points": 20 },
+      { "answer": "Bird", "points": 10 }
+    ]
+  },
+  {
+    "question": "Name a common pizza topping",
+    "answers": [
+      { "answer": "Cheese", "points": 35 },
+      { "answer": "Pepperoni", "points": 30 },
+      { "answer": "Mushrooms", "points": 20 },
+      { "answer": "Onions", "points": 10 }
+    ]
+  },
+  {
+    "question": "Name a color in the rainbow",
+    "answers": [
+      { "answer": "Red", "points": 30 },
+      { "answer": "Blue", "points": 25 },
+      { "answer": "Green", "points": 20 },
+      { "answer": "Yellow", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something kids hate to do",
+    "answers": [
+      { "answer": "Homework", "points": 35 },
+      { "answer": "Clean their room", "points": 30 },
+      { "answer": "Eat vegetables", "points": 20 },
+      { "answer": "Go to bed early", "points": 10 }
+    ]
+  },
+  {
+    "question": "Name a fast food restaurant",
+    "answers": [
+      { "answer": "McDonald's", "points": 35 },
+      { "answer": "Burger King", "points": 25 },
+      { "answer": "KFC", "points": 20 },
+      { "answer": "Subway", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a type of vehicle",
+    "answers": [
+      { "answer": "Car", "points": 35 },
+      { "answer": "Motorcycle", "points": 25 },
+      { "answer": "Bus", "points": 20 },
+      { "answer": "Truck", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a holiday people celebrate",
+    "answers": [
+      { "answer": "Christmas", "points": 35 },
+      { "answer": "New Year", "points": 25 },
+      { "answer": "Halloween", "points": 20 },
+      { "answer": "Easter", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a country known for pasta",
+    "answers": [
+      { "answer": "Italy", "points": 40 },
+      { "answer": "France", "points": 20 },
+      { "answer": "USA", "points": 15 },
+      { "answer": "Spain", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something you find in a school",
+    "answers": [
+      { "answer": "Students", "points": 30 },
+      { "answer": "Teachers", "points": 25 },
+      { "answer": "Books", "points": 20 },
+      { "answer": "Desks", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a sport played with a ball",
+    "answers": [
+      { "answer": "Football", "points": 30 },
+      { "answer": "Basketball", "points": 25 },
+      { "answer": "Tennis", "points": 20 },
+      { "answer": "Cricket", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something you drink in the morning",
+    "answers": [
+      { "answer": "Coffee", "points": 35 },
+      { "answer": "Tea", "points": 25 },
+      { "answer": "Juice", "points": 20 },
+      { "answer": "Milk", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a popular ice cream flavor",
+    "answers": [
+      { "answer": "Vanilla", "points": 30 },
+      { "answer": "Chocolate", "points": 25 },
+      { "answer": "Strawberry", "points": 20 },
+      { "answer": "Mint", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a piece of clothing you wear in winter",
+    "answers": [
+      { "answer": "Jacket", "points": 30 },
+      { "answer": "Sweater", "points": 25 },
+      { "answer": "Scarf", "points": 20 },
+      { "answer": "Gloves", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name a place where you need to be quiet",
+    "answers": [
+      { "answer": "Library", "points": 35 },
+      { "answer": "Church", "points": 25 },
+      { "answer": "Cinema", "points": 20 },
+      { "answer": "Hospital", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something people buy at the supermarket",
+    "answers": [
+      { "answer": "Bread", "points": 30 },
+      { "answer": "Milk", "points": 25 },
+      { "answer": "Eggs", "points": 20 },
+      { "answer": "Vegetables", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something that uses batteries",
+    "answers": [
+      { "answer": "Remote control", "points": 30 },
+      { "answer": "Flashlight", "points": 25 },
+      { "answer": "Toys", "points": 20 },
+      { "answer": "Clock", "points": 15 }
+    ]
+  },
+  {
+    "question": "Name something people do on their birthday",
+    "answers": [
+      { "answer": "Eat cake", "points": 35 },
+      { "answer": "Party", "points": 25 },
+      { "answer": "Open gifts", "points": 20 },
+      { "answer": "Blow candles", "points": 15 }
+    ]
+  }
+]
